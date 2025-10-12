@@ -13,31 +13,31 @@ def safe_log10(x):
 # --- Experimental Data ---
 t_data = np.array([24, 26, 28, 31, 33, 35, 38, 40, 42, 45, 47, 49, 52, 54, 56, 59, 61, 63, 66])
 T_data_list = [
-    np.array([102, 125, 110, 128, 139]),
-    np.array([107, 135, 119, 135, 148]),
-    np.array([116, 143, 124, 143, 157]),
-    np.array([125, 156, 133, 159, 170]),
-    np.array([137, 169, 144, 173, 187]),
-    np.array([149, 201, 188, 211, 206]),
-    np.array([167, 222, 208, 237, 223]),
-    np.array([177, 238, 223, 256, 237]),
-    np.array([187, 251, 233, 272, 250]),
-    np.array([291, 336, 354, 405, 321]),
-    np.array([367, 469, 451, 471, 382]),
-    np.array([386, 500, 477, 492, 411]),
-    np.array([441, np.nan, 562, np.nan, 425]),
-    np.array([460, np.nan, 587, np.nan, 443]),
-    np.array([605, np.nan, 679, np.nan, 518]),
-    np.array([733, np.nan, np.nan, np.nan, 570]),
-    np.array([846, np.nan, np.nan, np.nan, 617]),
-    np.array([922, np.nan, np.nan, np.nan, 661]),
-    np.array([np.nan, np.nan, np.nan, np.nan, 763])
+    np.array([101,104,126,118,122]),
+    np.array([109,113,137,126,133]),
+    np.array([117, 121, 144, 134, 138]),
+    np.array([130,138,160,148,149]),
+    np.array([141,151,173,159,166]),
+    np.array([157,167,221,186,215]),
+    np.array([172,181,242,205,232]),
+    np.array([183,193,257,220,249]),
+    np.array([192,199,271,235,264]),
+    np.array([303,219,339,332,318]),
+    np.array([323,236,359,351,340]),
+    np.array([343,251,386,367,358]),
+    np.array([336,233,392,306,380]),
+    np.array([326,223,404,296,396]),
+    np.array([373,194,364,274,322]),
+    np.array([319,291,264,261,345]),
+    np.array([np.nan,327, np.nan,303,389]),
+    np.array([np.nan, 360, np.nan,334,418]),
+    np.array([np.nan, 341, np.nan, 305, 440])
 ]
 v_data = np.array([0.04167, 1, 3, 7, 28])
 V_data_list = [
-    np.array([1.372643, 0.018196, 1.158547, 99.04117, 26509.89]),
-    np.array([0.01, 0.012721, 0.01, 585.1756, 6010.401]),
-    np.array([np.nan, 0.01, 0.01, 0.275531, 92476.8])
+    np.array([133.8419,0.01,223.9923,14025.97,1278666]),
+    np.array([1117.786,0.147289,383.6778,1134.211,784866.8]),
+    np.array([397.7273,0.01,229.1866,202.887,407074])
 ]
 
 V_data_list1 = [
@@ -218,7 +218,6 @@ plt.scatter([28] * len(V_data_list[1]), safe_log10(V_data_list[1]),
             color='green', s=60, zorder=10, label='t=28 (injection time)')
 plt.scatter([33] * len(V_data_list[2]), safe_log10(V_data_list[2]),
             color='purple', s=60, zorder=10, label='t=33 (2 days post-injection)')
-
 # Injection markers
 injection_times = [26, 28, 31]
 for t in injection_times:
