@@ -9,34 +9,33 @@ def safe_log10(x):
     return np.log10(np.maximum(x, 1e-10))
 
 # --- Experimental Data (real days post-implant: 24-66) ---
-t_data = np.array([24, 26, 28, 31, 33, 35, 38, 40, 42, 45, 47, 49, 52, 54, 56, 59, 61, 63, 66])
+t_data = np.array([0, 2, 4, 7, 9, 11, 14, 16, 18, 21, 23, 25, 28, 30, 32, 35, 37, 39, 42])
 T_data_list = [
-    np.array([101,104,126,118,122]),
-    np.array([109,113,137,126,133]),
-    np.array([117,121,144,134,138]),
-    np.array([130,138,160,148,149]),
-    np.array([141,151,173,159,166]),
-    np.array([157,167,221,186,215]),
-    np.array([172,181,242,205,232]),
-    np.array([183,193,257,220,249]),
-    np.array([192,199,271,235,264]),
-    np.array([303,219,339,332,318]),
-    np.array([323,236,359,351,340]),
-    np.array([343,251,386,367,358]),
-    np.array([336,233,392,306,380]),
-    np.array([326,223,404,296,396]),
-    np.array([373,194,364,274,322]),
-    np.array([319,291,264,261,345]),
-    np.array([np.nan,327,np.nan,303,389]),
-    np.array([np.nan,360,np.nan,334,418]),
-    np.array([np.nan,341,np.nan,305,440])
+    np.array([102,125,110,128,139]),
+    np.array([107,135,119,135,148]),
+    np.array([116,143,124,143,157]),
+    np.array([125,156,133,159,170]),
+    np.array([137,169,144,173,187]),
+    np.array([149,201,188,211,206]),
+    np.array([167,222,208,237,223]),
+    np.array([177,238,223,256,237]),
+    np.array([187,251,233,272,250]),
+    np.array([291,336,354,405,321]),
+    np.array([367,469,451,471,382]),
+    np.array([386,500,477,492,411]),
+    np.array([441, np.nan, 562, np.nan, 425]),
+    np.array([460, np.nan, 587, np.nan, 443]),
+    np.array([605, np.nan, 679, np.nan, 518]),
+    np.array([733, np.nan, np.nan, np.nan, 570]),
+    np.array([846, np.nan, np.nan, np.nan, 617]),
+    np.array([922, np.nan, np.nan, np.nan, 661]),
+    np.array([np.nan, np.nan, np.nan, np.nan, 763])
 ]
 V_data_list = [
-    np.array([133.8419,0.01,223.9923,14025.97,1278666]),
-    np.array([1117.786,0.147289,383.6778,1134.211,784866.8]),
-    np.array([397.7273,0.01,229.1866,202.887,407074])
+    np.array([1.372643, 0.018196, 1.158547, 99.04117, 26509.89]),
+    np.array([0.01, 0.012721, 0.01, 585.1756, 6010.401]),
+    np.array([np.nan, 0.01, 0.01, 0.275531, 92476.8])
 ]
-
 # --- Model: T, R, I, V, F ---
 def base_model(Y, t, lam, beta, delta, p, c, gamma, roh, alpha):
     T, R, I, V, F = Y
@@ -96,29 +95,28 @@ def objective(params, t_exp, T_obs):
     pred = np.maximum(sim_interp, 1e-10)
     return np.sum((np.log10(obs) - np.log10(pred)) ** 2)
 
-initial_guess = [1.3122e-05, 0.05, 5.000e+03, 20.0, 0.001, 0.01, 0.1]
+initial_guess = [4e-5, 0.012, 1005.78, 20.0, 0.001, 0.01, 0.1]
 
 bounds = [
-    (1e-8, 1e-3),          # beta
-    (0.01564, 5.0),        # delta
-    (1000.0, 50000.654),   # p
-    (1.0, 500.0),          # c
-    (0.00001, 0.5),        # gamma
-    (0.001, 0.5),          # roh
-    (0.001, 10.5324),      # alpha
+    (1e-8, 1e-2),
+    (0.01, 5.0),
+    (156.0, 100000.0),
+    (1.0, 500.0),
+    (0.0002554, 1.0),
+    (0.0001, 10.0),
+    (0.001, 10.5324)
 ]
-
 param_names = ["beta", "delta", "p", "c", "gamma", "roh", "alpha"]
 
 # --- CSV setup ---
-csv_filename = "adenoICB1042-bootstrap_results.csv"
+csv_filename = "wtAd5-bootstrap_results.csv"
 with open(csv_filename, mode="w", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
     writer.writerow(["type", *param_names, "SSR"])
 
 # --- Original fit ---
 #res = minimize(objective, initial_guess, args=(exp_t, exp_T), bounds=bounds)
-best_params = [1.1491e-07, 0.0156, 5.000e+04, 1.0029, 0.000, 0.04909, 10.5051]
+best_params = [2.1924e-06, 0.0107, 8.7034e+04, 54.2611, 0.0003, 4.5419, 9.5663]
 
 print("\nOriginal Fit Parameters:")
 for n, v in zip(param_names, best_params):
